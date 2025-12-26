@@ -99,9 +99,8 @@ const App: React.FC = () => {
 
   if (state === AppState.LOGIN) {
     return (
-      <div className="flex h-screen bg-[#020617] overflow-hidden">
-        {/* Left Branding Side (Preview Area Placeholder) */}
-        <div className="hidden lg:flex flex-1 flex-col items-center justify-center relative p-20">
+      <div className="flex flex-col lg:flex-row h-screen bg-[#020617] overflow-hidden">
+        <div className="hidden lg:flex flex-1 flex-col items-center justify-center relative p-20 border-r border-white/5">
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-sky-500/10 blur-[150px] rounded-full animate-pulse"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 blur-[150px] rounded-full"></div>
           
@@ -114,8 +113,7 @@ const App: React.FC = () => {
           </div>
         </div>
         
-        {/* Right Login Sidebar */}
-        <div className="w-full lg:w-[480px] h-full shadow-3xl z-50">
+        <div className="w-full lg:w-[480px] h-full shadow-3xl z-50 overflow-y-auto">
           <Login onLogin={handleLogin} />
         </div>
       </div>
@@ -123,7 +121,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden">
+    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden relative">
       <Header 
         onLogoClick={handleReset} 
         isAdmin={currentUser?.role === 'admin'} 
@@ -133,12 +131,11 @@ const App: React.FC = () => {
         isAdminOpen={showAdminPanel}
       />
       
-      <div className="flex pt-20 h-screen overflow-hidden">
-        {/* Main Workspace Area (The Viewport) */}
-        <main className={`flex-1 overflow-y-auto transition-all duration-700 custom-scrollbar ${showAdminPanel ? 'mr-[450px] opacity-40 blur-sm scale-[0.98]' : 'mr-0'}`}>
-          <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="flex pt-20 h-screen overflow-hidden relative">
+        <main className={`flex-1 overflow-y-auto transition-all duration-700 custom-scrollbar ${showAdminPanel ? 'lg:mr-[450px] opacity-20 lg:opacity-40 blur-sm' : 'mr-0'}`}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
             {state === AppState.IDLE && (
-              <div className="py-20 animate-in fade-in zoom-in duration-700">
+              <div className="py-10 sm:py-20 animate-in fade-in zoom-in duration-700">
                 <Uploader onUpload={handleFileUpload} isUploading={false} />
               </div>
             )}
@@ -148,24 +145,23 @@ const App: React.FC = () => {
             )}
           </div>
           
-          <footer className="border-t border-white/5 py-8 text-center mt-20">
-            <p className="text-[9px] text-slate-700 font-black uppercase tracking-[0.4em]">SVGA GENIUS • WORKSPACE ISOLATION ACTIVE</p>
+          <footer className="border-t border-white/5 py-8 text-center mt-10 sm:mt-20">
+            <p className="text-[8px] sm:text-[9px] text-slate-700 font-black uppercase tracking-[0.4em]">SVGA GENIUS • WORKSPACE ISOLATION ACTIVE</p>
           </footer>
         </main>
 
-        {/* Admin Side Drawer (The Control Bar) */}
         <aside 
-          className={`fixed top-20 right-0 bottom-0 w-full sm:w-[450px] bg-slate-900/90 backdrop-blur-3xl border-l border-white/10 z-[110] transition-transform duration-500 shadow-3xl overflow-y-auto ${showAdminPanel ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`fixed top-0 lg:top-20 right-0 bottom-0 w-full lg:w-[450px] bg-[#020617]/95 lg:bg-slate-900/90 backdrop-blur-3xl border-l border-white/10 z-[200] lg:z-[110] transition-transform duration-500 shadow-3xl overflow-y-auto ${showAdminPanel ? 'translate-x-0' : 'translate-x-full'}`}
         >
-          <div className="p-8">
-            <div className="flex justify-between items-center mb-10">
+          <div className="p-6 sm:p-8 pt-24 lg:pt-8">
+            <div className="flex justify-between items-center mb-8 sm:mb-10">
               <button 
                  onClick={() => setShowAdminPanel(false)}
-                 className="w-10 h-10 bg-white/5 hover:bg-red-500/20 text-white rounded-xl flex items-center justify-center transition-all group"
+                 className="w-12 h-12 lg:w-10 lg:h-10 bg-white/5 hover:bg-red-500/20 text-white rounded-2xl lg:rounded-xl flex items-center justify-center transition-all group border border-white/10"
                >
-                 <svg className="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+                 <svg className="w-6 h-6 lg:w-5 lg:h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
                </button>
-               <h3 className="text-white font-black uppercase text-sm tracking-widest">Master Control</h3>
+               <h3 className="text-white font-black uppercase text-xs sm:text-sm tracking-widest">Master Control</h3>
             </div>
             <AdminPanel />
           </div>
@@ -174,7 +170,8 @@ const App: React.FC = () => {
 
       <style>{`
         .shadow-3xl { box-shadow: -20px 0 50px rgba(0,0,0,0.5); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        @media (min-width: 640px) { .custom-scrollbar::-webkit-scrollbar { width: 6px; } }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.1); border-radius: 30px; }
       `}</style>
