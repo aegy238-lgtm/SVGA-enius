@@ -9,7 +9,6 @@ export interface Feature {
 export enum AppState {
   LOGIN = 'LOGIN',
   IDLE = 'IDLE',
-  UPLOADING = 'UPLOADING',
   PROCESSING = 'PROCESSING',
   EXPORTING = 'EXPORTING',
   ADMIN_PANEL = 'ADMIN_PANEL'

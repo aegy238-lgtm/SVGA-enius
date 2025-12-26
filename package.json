@@ -1,3 +1,4 @@
+
 {
   "name": "copy-of-svg666a-enius-processor",
   "private": true,
@@ -11,7 +12,7 @@
   "dependencies": {
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "firebase": "^12.7.0"
+    "firebase": "10.8.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
